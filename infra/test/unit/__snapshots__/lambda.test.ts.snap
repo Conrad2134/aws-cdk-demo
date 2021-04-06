@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`lambda is created with an alarm 1`] = `
+Object {
+  "Parameters": Object {
+    "AssetParameters979f6fce7b86ca2b7d0d0bc2a62b49dc1eb28eb444e8781711946229cea76f8aArtifactHashEFAC242C": Object {
+      "Description": "Artifact hash for asset \\"979f6fce7b86ca2b7d0d0bc2a62b49dc1eb28eb444e8781711946229cea76f8a\\"",
+      "Type": "String",
+    },
+    "AssetParameters979f6fce7b86ca2b7d0d0bc2a62b49dc1eb28eb444e8781711946229cea76f8aS3BucketBE870156": Object {
+      "Description": "S3 bucket for asset \\"979f6fce7b86ca2b7d0d0bc2a62b49dc1eb28eb444e8781711946229cea76f8a\\"",
+      "Type": "String",
+    },
+    "AssetParameters979f6fce7b86ca2b7d0d0bc2a62b49dc1eb28eb444e8781711946229cea76f8aS3VersionKey6034C6D7": Object {
+      "Description": "S3 key for asset version \\"979f6fce7b86ca2b7d0d0bc2a62b49dc1eb28eb444e8781711946229cea76f8a\\"",
+      "Type": "String",
+    },
+  },
+  "Resources": Object {
+    "TestFunctionTestFunctionErrorAlarm5235A6CA": Object {
+      "Properties": Object {
+        "AlarmDescription": "Alarm for errors in test-function",
+        "AlarmName": "test-function-error",
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "Dimensions": Array [
+          Object {
+            "Name": "FunctionName",
+            "Value": Object {
+              "Ref": "TestFunctionTestFunctionStandardLambda2CA2A9CB",
+            },
+          },
+        ],
+        "EvaluationPeriods": 1,
+        "MetricName": "Errors",
+        "Namespace": "AWS/Lambda",
+        "Period": 60,
+        "Statistic": "Sum",
+        "Threshold": 1,
+        "Unit": "Count",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "TestFunctionTestFunctionStandardLambda2CA2A9CB": Object {
+      "DependsOn": Array [
+        "TestFunctionTestFunctionStandardLambdaServiceRoleA11353EE",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParameters979f6fce7b86ca2b7d0d0bc2a62b49dc1eb28eb444e8781711946229cea76f8aS3BucketBE870156",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters979f6fce7b86ca2b7d0d0bc2a62b49dc1eb28eb444e8781711946229cea76f8aS3VersionKey6034C6D7",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters979f6fce7b86ca2b7d0d0bc2a62b49dc1eb28eb444e8781711946229cea76f8aS3VersionKey6034C6D7",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+          },
+        },
+        "FunctionName": "test-function",
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "TestFunctionTestFunctionStandardLambdaServiceRoleA11353EE",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "TestFunctionTestFunctionStandardLambdaServiceRoleA11353EE": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+  },
+}
+`;

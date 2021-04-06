@@ -1,0 +1,402 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot 1`] = `
+Object {
+  "Outputs": Object {
+    "Stage": Object {
+      "Value": "dev",
+    },
+    "Url": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Ref": "devApiC3CC17DA",
+            },
+            ".execute-api.",
+            Object {
+              "Ref": "AWS::Region",
+            },
+            ".",
+            Object {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/",
+            Object {
+              "Ref": "devApiDeploymentStageprod52DF5A2B",
+            },
+            "/",
+          ],
+        ],
+      },
+    },
+    "devApiEndpoint98C7470B": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Ref": "devApiC3CC17DA",
+            },
+            ".execute-api.",
+            Object {
+              "Ref": "AWS::Region",
+            },
+            ".",
+            Object {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/",
+            Object {
+              "Ref": "devApiDeploymentStageprod52DF5A2B",
+            },
+            "/",
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": Object {
+    "AssetParametersdc526fba3b959b607fb2889d3f2bfce36dcf6725762f9f1fb798e0f3e37cab27ArtifactHashA9E4A5C0": Object {
+      "Description": "Artifact hash for asset \\"dc526fba3b959b607fb2889d3f2bfce36dcf6725762f9f1fb798e0f3e37cab27\\"",
+      "Type": "String",
+    },
+    "AssetParametersdc526fba3b959b607fb2889d3f2bfce36dcf6725762f9f1fb798e0f3e37cab27S3BucketA32DDD8B": Object {
+      "Description": "S3 bucket for asset \\"dc526fba3b959b607fb2889d3f2bfce36dcf6725762f9f1fb798e0f3e37cab27\\"",
+      "Type": "String",
+    },
+    "AssetParametersdc526fba3b959b607fb2889d3f2bfce36dcf6725762f9f1fb798e0f3e37cab27S3VersionKey5E2A4E82": Object {
+      "Description": "S3 key for asset version \\"dc526fba3b959b607fb2889d3f2bfce36dcf6725762f9f1fb798e0f3e37cab27\\"",
+      "Type": "String",
+    },
+  },
+  "Resources": Object {
+    "devApiAccount868FF95F": Object {
+      "DependsOn": Array [
+        "devApiC3CC17DA",
+      ],
+      "Properties": Object {
+        "CloudWatchRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "devApiCloudWatchRole555CA2FB",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ApiGateway::Account",
+    },
+    "devApiC3CC17DA": Object {
+      "Properties": Object {
+        "Name": "dev-Api",
+      },
+      "Type": "AWS::ApiGateway::RestApi",
+    },
+    "devApiCloudWatchRole555CA2FB": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "apigateway.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "devApiDeployment810636E4254c537a5cd46d0ca84afdda704330b7": Object {
+      "DependsOn": Array [
+        "devApidriversGET3DB86A28",
+        "devApidrivers15332EDF",
+      ],
+      "Properties": Object {
+        "Description": "Automatically created by the RestApi construct",
+        "RestApiId": Object {
+          "Ref": "devApiC3CC17DA",
+        },
+      },
+      "Type": "AWS::ApiGateway::Deployment",
+    },
+    "devApiDeploymentStageprod52DF5A2B": Object {
+      "Properties": Object {
+        "DeploymentId": Object {
+          "Ref": "devApiDeployment810636E4254c537a5cd46d0ca84afdda704330b7",
+        },
+        "RestApiId": Object {
+          "Ref": "devApiC3CC17DA",
+        },
+        "StageName": "prod",
+      },
+      "Type": "AWS::ApiGateway::Stage",
+    },
+    "devApidrivers15332EDF": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Fn::GetAtt": Array [
+            "devApiC3CC17DA",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "drivers",
+        "RestApiId": Object {
+          "Ref": "devApiC3CC17DA",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "devApidriversGET3DB86A28": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "devGetDriversdevGetDriversStandardLambda36851C3E",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "devApidrivers15332EDF",
+        },
+        "RestApiId": Object {
+          "Ref": "devApiC3CC17DA",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "devApidriversGETApiPermissionF1DataTestStackdevApi36D5F4CDGETdriversCDD8928B": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "devGetDriversdevGetDriversStandardLambda36851C3E",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "devApiC3CC17DA",
+              },
+              "/",
+              Object {
+                "Ref": "devApiDeploymentStageprod52DF5A2B",
+              },
+              "/GET/drivers",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "devApidriversGETApiPermissionTestF1DataTestStackdevApi36D5F4CDGETdrivers63F99BEC": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "devGetDriversdevGetDriversStandardLambda36851C3E",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "devApiC3CC17DA",
+              },
+              "/test-invoke-stage/GET/drivers",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "devGetDriversdevGetDriversErrorAlarmBD8DAFA0": Object {
+      "Properties": Object {
+        "AlarmDescription": "Alarm for errors in dev-get-drivers",
+        "AlarmName": "dev-get-drivers-error",
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "Dimensions": Array [
+          Object {
+            "Name": "FunctionName",
+            "Value": Object {
+              "Ref": "devGetDriversdevGetDriversStandardLambda36851C3E",
+            },
+          },
+        ],
+        "EvaluationPeriods": 1,
+        "MetricName": "Errors",
+        "Namespace": "AWS/Lambda",
+        "Period": 60,
+        "Statistic": "Sum",
+        "Threshold": 1,
+        "Unit": "Count",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "devGetDriversdevGetDriversStandardLambda36851C3E": Object {
+      "DependsOn": Array [
+        "devGetDriversdevGetDriversStandardLambdaServiceRoleCA98D48F",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParametersdc526fba3b959b607fb2889d3f2bfce36dcf6725762f9f1fb798e0f3e37cab27S3BucketA32DDD8B",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParametersdc526fba3b959b607fb2889d3f2bfce36dcf6725762f9f1fb798e0f3e37cab27S3VersionKey5E2A4E82",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParametersdc526fba3b959b607fb2889d3f2bfce36dcf6725762f9f1fb798e0f3e37cab27S3VersionKey5E2A4E82",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+          },
+        },
+        "FunctionName": "dev-get-drivers",
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "devGetDriversdevGetDriversStandardLambdaServiceRoleCA98D48F",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "devGetDriversdevGetDriversStandardLambdaServiceRoleCA98D48F": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+  },
+}
+`;
