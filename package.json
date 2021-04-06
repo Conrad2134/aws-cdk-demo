@@ -1,0 +1,10 @@
+{
+  "name": "aws-cdk-demo",
+  "version": "1.0.0",
+  "description": "A demo CDK application.",
+  "author": "Connor Uhlman",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.73",
+    "typescript": "^4.2.3"
+  }
+}
