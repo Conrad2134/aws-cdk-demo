@@ -60,7 +60,7 @@ export class F1DataPipeline extends Stack {
           SERVICE_URL: pipeline.stackOutput(devStage.url),
         },
       }),
-      new ManualApprovalAction({ actionName: 'Promote' })
+      new ManualApprovalAction({ actionName: 'Promote', runOrder: devAppStage.nextSequentialRunOrder() })
     );
 
     const prodStage = pipeline.addApplicationStage(
